@@ -27,7 +27,7 @@
         ]
     ],
     "checkver": {
-        "github": "https://github.com/Gzh0821/pvzg_site",
+        "url": "https://github.com/Gzh0821/pvzg_site/releases",
         "regex": "releases/tag/([\\d.]+[a-z]?)"
     },
     "autoupdate": {
