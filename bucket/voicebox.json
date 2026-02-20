@@ -3,6 +3,7 @@
     "description": "The open-source voice synthesis studio powered by Qwen3-TTS.",
     "homepage": "https://voicebox.sh/",
     "license": "MIT",
+    "extract_dir": "PFiles\\Voicebox",
     "architecture": {
         "64bit": {
             "url": "https://github.com/jamiepine/voicebox/releases/download/v0.1.12/Voicebox_0.1.12_x64_en-US.msi",
