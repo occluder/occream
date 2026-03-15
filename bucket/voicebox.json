@@ -1,13 +1,13 @@
 {
-    "version": "0.1.13",
+    "version": "0.2.1",
     "description": "The open-source voice synthesis studio powered by Qwen3-TTS.",
     "homepage": "https://voicebox.sh/",
     "license": "MIT",
     "extract_dir": "PFiles\\Voicebox",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/jamiepine/voicebox/releases/download/v0.1.13/Voicebox_0.1.13_x64_en-US.msi",
-            "hash": "caa3711aada0c2483c404577c68961732a3d4b9eba61f08f608b1477eab8c1d1"
+            "url": "https://github.com/jamiepine/voicebox/releases/download/v0.2.1/Voicebox_0.2.1_x64_en-US.msi",
+            "hash": "780cd550cf9bf88f13df529590d6bb89a87484e20cd68cb399deb2d4730482c3"
         }
     },
     "bin": [
