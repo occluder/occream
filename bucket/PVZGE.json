@@ -1,13 +1,13 @@
 {
-    "version": "0.8.1",
+    "version": "0.8.2",
     "description": "PVZ2 Gardenedless",
     "homepage": "https://github.com/Gzh0821/pvzg_site",
     "license": {
         "identifier": "Freeware",
         "url": "https://github.com/Gzh0821/pvzg_site/blob/main/LICENSE"
     },
-    "url": "https://github.com/Gzh0821/pvzg_site/releases/download/0.8.1/pvzge-0.8.1.zip",
-    "hash": "3f9c0d23e3a1487b85c6715a69ce799c702c893ae87ec10adef1300051abdc0c",
+    "url": "https://github.com/Gzh0821/pvzg_site/releases/download/0.8.2/pvzge-0.8.2.zip",
+    "hash": "5c96e7125b93b9d8b7c771c4c4603954668b0fa2955dee0bdca1c7b7dd38825a",
     "pre_install": [
         "# Remove any existing executable",
         "Get-ChildItem \"$dir\" -Filter 'pvzge*.exe' | Remove-Item -Force",
