@@ -12,9 +12,17 @@
             "hash": "ea5e6a690a4d2e734b9d6a0858863af1cca5e093cd0a53e91efd0b968231a001",
             "installer": {
                 "script": [
-                    "Remove-Item \"$dir\\*\" -Exclude \"app-64.7z\"",
-                    "Expand-7zipArchive \"$dir\\app-64.7z\" \"$dir\"",
-                    "Remove-Item \"$dir\\app-64.7z\""
+                    "# Extract the archive into a temporary folder",
+                    "Expand-7zipArchive \"$dir\\dl.7z\" \"$dir\\tmp\"",
+                    "# Move everything from the $PLUGINSDIR folder to the app root",
+                    "Move-Item \"$dir\\tmp\\$PLUGINSDIR\\*\" \"$dir\\\" -Force",
+                    "# Remove the temporary folder and the original archive",
+                    "Remove-Item \"$dir\\tmp\" -Recurse -Force",
+                    "Remove-Item \"$dir\\dl.7z\" -Force",
+                    "# Now extract the inner app-64.7z (or app-arm64.7z)",
+                    "$innerArchive = if ($architecture -eq '64bit') { 'app-64.7z' } else { 'app-arm64.7z' }",
+                    "Expand-7zipArchive \"$dir\\$innerArchive\" \"$dir\"",
+                    "Remove-Item \"$dir\\$innerArchive\" -Force"
                 ]
             }
         },
@@ -23,14 +31,17 @@
             "hash": "297a287c78e1c4c14227520a7cbc72f75310c4064433fa234ecc72ed99e50f9e",
             "installer": {
                 "script": [
-                    "Remove-Item \"$dir\\*\" -Exclude \"app-arm64.7z\"",
-                    "Expand-7zipArchive \"$dir\\app-arm64.7z\" \"$dir\"",
-                    "Remove-Item \"$dir\\app-arm64.7z\""
+                    "Expand-7zipArchive \"$dir\\dl.7z\" \"$dir\\tmp\"",
+                    "Move-Item \"$dir\\tmp\\$PLUGINSDIR\\*\" \"$dir\\\" -Force",
+                    "Remove-Item \"$dir\\tmp\" -Recurse -Force",
+                    "Remove-Item \"$dir\\dl.7z\" -Force",
+                    "$innerArchive = 'app-arm64.7z'",
+                    "Expand-7zipArchive \"$dir\\$innerArchive\" \"$dir\"",
+                    "Remove-Item \"$dir\\$innerArchive\" -Force"
                 ]
             }
         }
     },
-    "extract_dir": "$PLUGINSDIR",
     "bin": "resources\\app\\.webpack\\lms.exe",
     "shortcuts": [
         [
