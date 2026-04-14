@@ -12,17 +12,11 @@
             "hash": "7571a70845c894483b93db68d95f42ca078049c2087f8cf93d97348153f2b0ee",
             "installer": {
                 "script": [
-                    "# Extract the archive into a temporary folder",
-                    "Expand-7zipArchive \"$dir\\dl.7z\" \"$dir\\tmp\"",
-                    "# Move everything from the $PLUGINSDIR folder to the app root",
-                    "Move-Item \"$dir\\tmp\\$PLUGINSDIR\\*\" \"$dir\\\" -Force",
-                    "# Remove the temporary folder and the original archive",
-                    "Remove-Item \"$dir\\tmp\" -Recurse -Force",
-                    "Remove-Item \"$dir\\dl.7z\" -Force",
-                    "# Now extract the inner app-64.7z (or app-arm64.7z)",
-                    "$innerArchive = if ($architecture -eq '64bit') { 'app-64.7z' } else { 'app-arm64.7z' }",
-                    "Expand-7zipArchive \"$dir\\$innerArchive\" \"$dir\"",
-                    "Remove-Item \"$dir\\$innerArchive\" -Force"
+                    "Remove-Item \"$dir\\*\" -Exclude \"app-64.7z\"",
+                    "Expand-7zipArchive \"$dir\\app-64.7z\" \"$dir\"",
+                    "Remove-Item \"$dir\\app-64.7z\"",
+                    ". \"$bucketsdir\\apeiraco\\bin\\persist-utils.ps1\"",
+                    "Set-PersistLinks -PersistDir $persist_dir -LinkMap @{ 'appdata' = '$env:APPDATA\\LM Studio'; 'cache' = '$env:USERPROFILE\\.cache\\lm-studio'; 'userdata' = '$env:USERPROFILE\\.lm-studio' }"
                 ]
             }
         },
@@ -31,17 +25,16 @@
             "hash": "a9e27832f7dbf134dcab32635a0a28df6caeea9c45385fe379396db5dc4381f5",
             "installer": {
                 "script": [
-                    "Expand-7zipArchive \"$dir\\dl.7z\" \"$dir\\tmp\"",
-                    "Move-Item \"$dir\\tmp\\$PLUGINSDIR\\*\" \"$dir\\\" -Force",
-                    "Remove-Item \"$dir\\tmp\" -Recurse -Force",
-                    "Remove-Item \"$dir\\dl.7z\" -Force",
-                    "$innerArchive = 'app-arm64.7z'",
-                    "Expand-7zipArchive \"$dir\\$innerArchive\" \"$dir\"",
-                    "Remove-Item \"$dir\\$innerArchive\" -Force"
+                    "Remove-Item \"$dir\\*\" -Exclude \"app-arm64.7z\"",
+                    "Expand-7zipArchive \"$dir\\app-arm64.7z\" \"$dir\"",
+                    "Remove-Item \"$dir\\app-arm64.7z\"",
+                    ". \"$bucketsdir\\apeiraco\\bin\\persist-utils.ps1\"",
+                    "Set-PersistLinks -PersistDir $persist_dir -LinkMap @{ 'appdata' = '$env:APPDATA\\LM Studio'; 'cache' = '$env:USERPROFILE\\.cache\\lm-studio'; 'userdata' = '$env:USERPROFILE\\.lm-studio' }"
                 ]
             }
         }
     },
+    "extract_dir": "$PLUGINSDIR",
     "bin": "resources\\app\\.webpack\\lms.exe",
     "shortcuts": [
         [
@@ -49,6 +42,12 @@
             "LM Studio"
         ]
     ],
+    "uninstaller": {
+        "script": [
+            ". \"$bucketsdir\\apeiraco\\bin\\persist-utils.ps1\"",
+            "Remove-PersistLinks -PersistDir $persist_dir -LinkMap @{ 'appdata' = '$env:APPDATA\\LM Studio'; 'cache' = '$env:USERPROFILE\\.cache\\lm-studio'; 'userdata' = '$env:USERPROFILE\\.lm-studio' }"
+        ]
+    },
     "checkver": {
         "regex": "\\\\\"title\\\\\"\\s*:\\s*\\\\\"Windows\\\\\"\\s*,\\s*\\\\\"subtitle\\\\\"\\s*:\\s*\\\\\"([\\d.]+)\\\\\""
     },
