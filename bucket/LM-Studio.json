@@ -44,7 +44,7 @@
     ],
     "uninstaller": {
         "script": [
-            ". \"$bucketsdir\\apeiraco\\bin\\persist-utils.ps1\"",
+            ". \"$bucketsdir\\occream\\bin\\persist-utils.ps1\"",
             "Remove-PersistLinks -PersistDir $persist_dir -LinkMap @{ 'appdata' = '$env:APPDATA\\LM Studio'; 'cache' = '$env:USERPROFILE\\.cache\\lm-studio'; 'userdata' = '$env:USERPROFILE\\.lm-studio' }"
         ]
     },
