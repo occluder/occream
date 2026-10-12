@@ -37,6 +37,11 @@ if (-not $ReadmePath) { $ReadmePath = Join-Path $PSScriptRoot '../README.md' }
 $startMarker = '<!-- manifests:start -->'
 $endMarker = '<!-- manifests:end -->'
 
+# Built from code points to keep this file ASCII, so Windows PowerShell 5.1
+# reads it correctly regardless of its encoding.
+$globe = [System.Char]::ConvertFromUtf32(0x1F310) # globe, links to the homepage
+$page = [System.Char]::ConvertFromUtf32(0x1F4C4) # page, links to the manifest file
+
 function Get-ManifestLastUpdated {
     param([string]$Path)
 
@@ -57,6 +62,7 @@ $rows = Get-ChildItem -Path $BucketDir -Filter '*.json' |
         [PSCustomObject]@{
             Name        = $_.BaseName
             Version     = $manifest.version
+            Homepage    = $manifest.homepage
             LastUpdated = Get-ManifestLastUpdated -Path $_.FullName
         }
     } |
@@ -73,7 +79,10 @@ $lines = @(
     '| Manifest | Version | Last updated |'
     '| --- | --- | --- |'
 ) + ($rows | ForEach-Object {
-    "| [$($_.Name)](bucket/$($_.Name).json) | $($_.Version) | $($_.LastUpdated) |"
+    $links = @()
+    if ($_.Homepage) { $links += "[$globe]($($_.Homepage))" }
+    $links += "[$page](bucket/$($_.Name).json)"
+    "| $($_.Name) $($links -join ' ') | $($_.Version) | $($_.LastUpdated) |"
 })
 
 $table = $lines -join $newline
