@@ -4,14 +4,32 @@ on:
     # run every 4 hours
     - cron: '20 */4 * * *'
 name: Excavator
+permissions:
+  contents: write
 jobs:
   excavate:
     name: Excavate
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@main
+        with:
+          # Full history so the README table can date each manifest by its last commit.
+          fetch-depth: 0
       - name: Excavate
         uses: ScoopInstaller/GithubActions@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SKIP_UPDATED: 1
+      - name: Update README
+        shell: pwsh
+        run: ./bin/update-readme.ps1
+      - name: Commit README
+        shell: pwsh
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md
+          if (git status --porcelain) {
+            git commit -m 'README: Update manifest table [skip ci]'
+            git push
+          }
