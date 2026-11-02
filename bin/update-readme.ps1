@@ -10,9 +10,12 @@
     <!-- manifests:end --> markers in README.md.
 
     The version comes from the manifest itself. The "Last updated" column is
-    the date of the last commit that touched that manifest, falling back to
+    the date of the last commit that touched that manifest, or today's date
+    when the manifest has changes that are not committed yet, falling back to
     the file's last write time when git is unavailable (for example in a
-    shallow checkout).
+    shallow checkout). A pending change counts as today so the table can be
+    regenerated before the update is committed, which is what lets the whole
+    update land in a single commit.
 
 .PARAMETER BucketDir
     Bucket directory to scan. Defaults to the bucket next to this script.
@@ -42,11 +45,46 @@ $endMarker = '<!-- manifests:end -->'
 $globe = [System.Char]::ConvertFromUtf32(0x1F310) # globe, links to the homepage
 $page = [System.Char]::ConvertFromUtf32(0x1F4C4) # page, links to the manifest file
 
+$repoRoot = $null
+if (Get-Command git -ErrorAction SilentlyContinue) {
+    $root = git rev-parse --show-toplevel 2>$null
+    if ($LASTEXITCODE -eq 0 -and $root) { $repoRoot = $root.Trim() }
+}
+
+function Get-RepoRelativePath {
+    param([string]$Path)
+
+    if (-not $repoRoot) { return $null }
+
+    Push-Location -Path $repoRoot
+    try {
+        $relative = Resolve-Path -Path $Path -Relative -ErrorAction SilentlyContinue
+    } finally {
+        Pop-Location
+    }
+
+    if (-not $relative) { return $null }
+
+    $relative = "$relative" -replace '\\', '/'
+    if ($relative.StartsWith('./')) { $relative = $relative.Substring(2) }
+    # Anything above the repository root is not addressable by git.
+    if ($relative.StartsWith('../')) { return $null }
+
+    return $relative
+}
+
 function Get-ManifestLastUpdated {
     param([string]$Path)
 
-    if (Get-Command git -ErrorAction SilentlyContinue) {
-        $date = git log -1 --format=%cs -- $Path 2>$null
+    $relative = Get-RepoRelativePath -Path $Path
+    if ($relative) {
+        # Uncommitted changes are the update this run is about to commit.
+        $pending = git -C $repoRoot status --porcelain -- $relative 2>$null
+        if ($LASTEXITCODE -eq 0 -and $pending) {
+            return (Get-Date).ToString('yyyy-MM-dd')
+        }
+
+        $date = git -C $repoRoot log -1 --format=%cs -- $relative 2>$null
         if ($LASTEXITCODE -eq 0 -and $date) {
             return $date.Trim()
         }

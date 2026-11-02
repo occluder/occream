@@ -6,6 +6,10 @@ on:
 name: Excavator
 permissions:
   contents: write
+concurrency:
+  # Never let two runs race for the same branch.
+  group: excavator
+  cancel-in-progress: false
 jobs:
   excavate:
     name: Excavate
@@ -15,21 +19,24 @@ jobs:
         with:
           # Full history so the README table can date each manifest by its last commit.
           fetch-depth: 0
-      - name: Excavate
-        uses: ScoopInstaller/GithubActions@main
+      # Same bootstrap the ScoopInstaller/GithubActions excavator uses; only its
+      # checkver is needed here, and running it directly is what lets the manifest
+      # updates and the README land in one commit.
+      - name: Install Scoop
+        shell: pwsh
+        run: Invoke-RestMethod 'https://raw.githubusercontent.com/ScoopInstaller/Install/master/install.ps1' | Invoke-Expression
+      - name: Update manifests
+        shell: pwsh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SKIP_UPDATED: 1
-      - name: Update README
-        shell: pwsh
-        run: ./bin/update-readme.ps1
-      - name: Commit README
+        run: |
+          $env:SCOOP_HOME = Join-Path $env:USERPROFILE 'scoop\apps\scoop\current'
+          # checkver reads the token from here to work within the GitHub API rate limit.
+          $env:SCOOP_GH_TOKEN = $env:GITHUB_TOKEN
+          ./bin/checkver.ps1 -Update -SkipUpdated
+      - name: Commit updates
         shell: pwsh
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add README.md
-          if (git status --porcelain) {
-            git commit -m 'README: Update manifest table [skip ci]'
-            git push
-          }
+          ./bin/commit-updates.ps1
