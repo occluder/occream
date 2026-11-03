@@ -1,6 +1,6 @@
 param(
     # overwrite upstream param
-    [String]$upstream = "occluder/occream:main"
+    [String]$upstream = "occluder/occream:master"
 )
 
 if (!$env:SCOOP_HOME) { $env:SCOOP_HOME = Convert-Path (scoop prefix scoop) }
