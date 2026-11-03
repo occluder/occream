@@ -1,6 +1,6 @@
 {
     "version": "0.16.8",
-    "description": "PVZ2 Gardenedless",
+    "description": "PvZ2 Gardendless",
     "homepage": "https://github.com/Gzh0821/pvzg_site",
     "license": {
         "identifier": "Freeware",
@@ -9,15 +9,9 @@
     "url": "https://github.com/Gzh0821/pvzg_site/releases/download/0.16.8/pvzge-0.16.8.zip",
     "hash": "cb11da079993fc2764a0c984f5339b580c9df19730a9ea9f0fada5f89ea46774",
     "pre_install": [
-        "# Remove any existing executable",
-        "Get-ChildItem \"$dir\" -Filter 'pvzge*.exe' | Remove-Item -Force",
-        "# Rename the versioned executable to consistent name",
-        "$versionedExe = \"pvzge-$version.exe\"",
-        "if (Test-Path \"$dir\\$versionedExe\") {",
-        "    Rename-Item \"$dir\\$versionedExe\" \"$dir\\pvzge.exe\"",
-        "}",
-        "# Clean up any other files",
-        "Get-ChildItem \"$dir\" -Exclude 'pvzge.exe' | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue"
+        "# Upstream ships a single versioned exe (pvzge-<version>.exe); rename it so bin/shortcuts stay version-independent",
+        "$exe = Get-ChildItem -Path \"$dir\" -Filter '*.exe' | Select-Object -First 1",
+        "if ($exe -and $exe.Name -ne 'pvzge.exe') { Rename-Item -Path $exe.FullName -NewName 'pvzge.exe' }"
     ],
     "bin": "pvzge.exe",
     "shortcuts": [
