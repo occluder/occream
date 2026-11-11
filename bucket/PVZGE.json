@@ -7,7 +7,7 @@
         "url": "https://github.com/Gzh0821/pvzg_site/blob/main/LICENSE"
     },
     "url": "https://github.com/Gzh0821/pvzg_site/releases/download/0.16.15/pvzge-0.16.15.zip",
-    "hash": "922d42e4474ba7bac06490d4615e9305fc8c33ee0901f234c5b6cde81447ff10",
+    "hash": "5ed97caca807c6db3d904e29d953bf5eaa0d7f4fb343ff7e643a457274724ecd",
     "pre_install": [
         "# Upstream ships a single versioned exe (pvzge-<version>.exe); rename it so bin/shortcuts stay version-independent",
         "$exe = Get-ChildItem -Path \"$dir\" -Filter '*.exe' | Select-Object -First 1",
