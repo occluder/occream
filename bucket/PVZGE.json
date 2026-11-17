@@ -1,13 +1,13 @@
 {
-    "version": "0.16.27",
+    "version": "0.16.24",
     "description": "PvZ2 Gardendless",
     "homepage": "https://github.com/Gzh0821/pvzg_site",
     "license": {
         "identifier": "Freeware",
         "url": "https://github.com/Gzh0821/pvzg_site/blob/main/LICENSE"
     },
-    "url": "https://github.com/Gzh0821/pvzg_site/releases/download/0.16.27/pvzge-0.16.27.zip",
-    "hash": "b80a73e8673ea9c32982f88d289f12d4b341dd85bc7b8486490d0a35155b8b37",
+    "url": "https://github.com/Gzh0821/pvzg_site/releases/download/0.16.24/pvzge-0.16.24.zip",
+    "hash": "ea803cfe1ed5f4ef502ef29d05e50cc607e034255ce916b1ff484d98ff5e5168",
     "pre_install": [
         "# Upstream ships a single versioned exe (pvzge-<version>.exe); rename it so bin/shortcuts stay version-independent",
         "$exe = Get-ChildItem -Path \"$dir\" -Filter '*.exe' | Select-Object -First 1",
