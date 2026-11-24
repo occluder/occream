@@ -9,7 +9,7 @@ Personal [Scoop](https://scoop.sh) bucket. The Windows command-line installer.
 <!-- manifests:start -->
 | Manifest | Version | Last updated |
 | --- | --- | --- |
-| dbx [🌐](https://github.com/t8y2/dbx) [📄](bucket/dbx.json) | 0.6.72 | 2026-11-20 |
+| dbx [🌐](https://github.com/t8y2/dbx) [📄](bucket/dbx.json) | 0.6.73 | 2026-11-24 |
 | LM-Studio [🌐](https://lmstudio.ai/) [📄](bucket/LM-Studio.json) | 0.4.28-2 | 2026-10-31 |
 | openchamber [🌐](https://openchamber.dev/) [📄](bucket/openchamber.json) | 2.8.0 | 2026-11-22 |
 | PVZGE [🌐](https://github.com/Gzh0821/pvzg_site) [📄](bucket/PVZGE.json) | 0.16.31 | 2026-11-22 |
