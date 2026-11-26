@@ -10,7 +10,7 @@ Personal [Scoop](https://scoop.sh) bucket. The Windows command-line installer.
 | Manifest | Version | Last updated |
 | --- | --- | --- |
 | Argus [🌐](https://argustask.com/) [📄](bucket/Argus.json) | 0.6.0 | 2026-11-24 |
-| dbx [🌐](https://github.com/t8y2/dbx) [📄](bucket/dbx.json) | 0.6.74 | 2026-11-24 |
+| dbx [🌐](https://github.com/t8y2/dbx) [📄](bucket/dbx.json) | 0.6.75 | 2026-11-26 |
 | frame [🌐](https://www.framegui.app/) [📄](bucket/frame.json) | 0.35.0 | 2026-11-24 |
 | LM-Studio [🌐](https://lmstudio.ai/) [📄](bucket/LM-Studio.json) | 0.4.29-2 | 2026-11-26 |
 | openchamber [🌐](https://openchamber.dev/) [📄](bucket/openchamber.json) | 2.8.0 | 2026-11-22 |
