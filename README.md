@@ -13,7 +13,7 @@ Personal [Scoop](https://scoop.sh) bucket. The Windows command-line installer.
 | dbx [🌐](https://github.com/t8y2/dbx) [📄](bucket/dbx.json) | 0.6.75 | 2026-11-26 |
 | frame [🌐](https://www.framegui.app/) [📄](bucket/frame.json) | 0.35.0 | 2026-11-24 |
 | LM-Studio [🌐](https://lmstudio.ai/) [📄](bucket/LM-Studio.json) | 0.4.29-2 | 2026-11-26 |
-| openchamber [🌐](https://openchamber.dev/) [📄](bucket/openchamber.json) | 2.8.0 | 2026-11-22 |
+| openchamber [🌐](https://openchamber.dev/) [📄](bucket/openchamber.json) | 2.8.1 | 2026-11-27 |
 | PVZGE [🌐](https://github.com/Gzh0821/pvzg_site) [📄](bucket/PVZGE.json) | 0.16.31 | 2026-11-25 |
 | RHI [🌐](https://github.com/RankFTW/RHI) [📄](bucket/RHI.json) | 2.9.6.2 | 2026-11-26 |
 | voicebox [🌐](https://voicebox.sh/) [📄](bucket/voicebox.json) | 0.5.0 | 2026-04-26 |
